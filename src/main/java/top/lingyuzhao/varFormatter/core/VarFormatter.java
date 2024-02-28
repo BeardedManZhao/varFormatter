@@ -7,10 +7,25 @@ package top.lingyuzhao.varFormatter.core;
  */
 public enum VarFormatter {
 
+    /**
+     * 将任意对象转换为 json 字符串的格式化组件类型，通过此类型可以直接获取到对应的格式化组件。
+     *
+     * Convert any object to a JSON string format component type, through which the corresponding format component can be directly obtained.
+     */
     JSON(new JsonFormatter()),
+
+    /**
+     * 将任意对象转换为 xml 字符串的格式化组件类型，通过此类型可以直接获取到对应的格式化组件。
+     *
+     * Convert any object to a xml string format component type, through which the corresponding format component can be directly obtained.
+     */
     XML(new XmlFormatter()),
-    //    CSV(null),
-//    TEXT(null),
+
+    /**
+     * 将任意对象转换为 html 字符串的格式化组件类型，通过此类型可以直接获取到对应的格式化组件。
+     *
+     * Convert any object to a html string format component type, through which the corresponding format component can be directly obtained.
+     */
     HTML(new HtmlFormatter());
 
     /**
@@ -20,6 +35,10 @@ public enum VarFormatter {
      */
     private final Formatter formatter;
 
+    /**
+     * 实例化一个类型的格式化器对象。
+     * @param formatter 此类型对应的格式化器对象。
+     */
     VarFormatter(Formatter formatter) {
         this.formatter = formatter;
     }

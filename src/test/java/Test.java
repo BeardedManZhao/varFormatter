@@ -13,13 +13,19 @@ import java.util.List;
 public class Test {
 
     public static void main(String[] args) {
+        // 获取到 json 格式化组件
         final Formatter formatter = VarFormatter.JSON.getFormatter(true);
+        // 将 对象转为 json 格式
         System.out.println(formatter.format(new TestObj()));
 
+        // 获取到 xml 格式化组件
         final Formatter formatter1 = VarFormatter.XML.getFormatter(true);
+        // 将 对象转为 xml 格式
         System.out.println(formatter1.format(new TestObj()));
 
+        // 获取到 html 格式化组件
         final Formatter formatter2 = VarFormatter.HTML.getFormatter(true);
+        // 将 对象转为 html 格式
         System.out.println(formatter2.format(new HtmlObj()));
     }
 
