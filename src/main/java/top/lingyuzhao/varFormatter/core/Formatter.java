@@ -92,7 +92,7 @@ public interface Formatter extends Cloneable {
     /**
      * @return 将当前的格式化器进行克隆和复制，获取到一个新格式化器对象。
      * <p>
-     * 将当前的格式化器进行克隆和复制，获取到一个新格式化器对象。
+     * Clone and copy the current formatter to obtain a new formatter object.
      */
     Formatter clone();
 }

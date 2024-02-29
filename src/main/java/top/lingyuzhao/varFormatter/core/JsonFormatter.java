@@ -1,15 +1,15 @@
 package top.lingyuzhao.varFormatter.core;
 
 import top.lingyuzhao.utils.ASClass;
-import top.lingyuzhao.utils.StrUtils;
+import top.lingyuzhao.varFormatter.utils.DataObj;
 
 import java.util.Collection;
 import java.util.Map;
 
 /**
- * 万能格式化器，此格式化器将会自动的迭代一个对象中的所有子参数，并根据子参数的字段类型进行格式化操作。
+ * JSON格式化器，同时也是基础格式化器，此格式化器将会自动的迭代一个对象中的所有子参数，并根据子参数的字段类型进行格式化操作，如果子类没有具体的实现，则这里返回的就是 json 数据类型。
  * <p>
- * Universal formatter, this formatter will automatically iterate over all sub parameters in an object and perform formatting operations based on the field type of the sub parameters.
+ * The JSON formatter, also known as the basic formatter, automatically iterates over all sub parameters in an object and performs formatting operations based on the field type of the sub parameters. If the sub class does not have a specific implementation, the returned data type is the JSON data class.
  *
  * @author zhao
  */
@@ -69,7 +69,7 @@ public class JsonFormatter implements Formatter {
     @Override
     public final String format(Map<?, ?> data) {
         // 完毕之后将结果返回
-        return this.format(data, "map");
+        return this.format(data, data instanceof DataObj ? ((DataObj) data).getName() : "map");
     }
 
     /**
@@ -129,8 +129,7 @@ public class JsonFormatter implements Formatter {
     public String format(Object data, boolean getName) {
         final Class<?> aClass = data instanceof Class ? (Class<?>) data : data.getClass();
         if (getName) {
-            final String[] strings = StrUtils.splitBy(aClass.getName(), '$');
-            return this.format(StructuralCache.classToMap(aClass, data), strings[strings.length - 1]);
+            return this.format(StructuralCache.classToMap(aClass, data), StructuralNameCache.classToName(aClass));
         }
         return this.format(StructuralCache.classToMap(aClass, data), null);
     }

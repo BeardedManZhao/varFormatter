@@ -3,7 +3,6 @@ import top.lingyuzhao.varFormatter.core.VarFormatter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * 测试类
@@ -13,38 +12,13 @@ import java.util.List;
 public class Test {
 
     public static void main(String[] args) {
-        // 获取到 json 格式化组件
-        final Formatter formatter = VarFormatter.JSON.getFormatter(true);
-        // 将 对象转为 json 格式
-        System.out.println(formatter.format(new TestObj()));
-
-        // 获取到 xml 格式化组件
-        final Formatter formatter1 = VarFormatter.XML.getFormatter(true);
-        // 将 对象转为 xml 格式
-        System.out.println(formatter1.format(new TestObj()));
-
-        // 获取到 html 格式化组件
-        final Formatter formatter2 = VarFormatter.HTML.getFormatter(true);
-        // 将 对象转为 html 格式
-        System.out.println(formatter2.format(new HtmlObj()));
+        // 使用单例模式 获取到 HTML 格式化组件
+        final Formatter formatter0 = VarFormatter.HTML.getFormatter(true);
+        // 将对象进行格式化操作 获取到对象的 HTML 结构
+        System.out.println(formatter0.format(new TestObj()));
     }
 
-    static class HtmlObj {
-        String h1 = "大标题";
-        String h2 = "小标题";
-        List<li> ul = new ArrayList<>();
-
-        {
-            ul.add(new li());
-            ul.add(new li());
-            ul.add(new li());
-        }
-
-        static class li {
-            String li = "行数据";
-        }
-    }
-
+    // 准备了一个复杂的类
     static class TestObj {
         String name = "zhao";
         int age = 1024;

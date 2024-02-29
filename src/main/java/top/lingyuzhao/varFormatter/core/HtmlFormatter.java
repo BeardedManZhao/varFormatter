@@ -1,7 +1,5 @@
 package top.lingyuzhao.varFormatter.core;
 
-import top.lingyuzhao.utils.StrUtils;
-
 import java.util.LinkedHashMap;
 
 /**
@@ -13,6 +11,9 @@ import java.util.LinkedHashMap;
  */
 public class HtmlFormatter extends XmlFormatter {
 
+    /**
+     * HTML 格式化组件的实例化函数。
+     */
     public HtmlFormatter() {
         super(VarFormatter.HTML);
     }
@@ -34,8 +35,7 @@ public class HtmlFormatter extends XmlFormatter {
     public String format(Object data, boolean getName) {
         final Class<?> aClass = data instanceof Class ? (Class<?>) data : data.getClass();
         if (getName) {
-            final String[] strings = StrUtils.splitBy(aClass.getName(), '$');
-            return this.format(StructuralCache.classToMap(aClass, data, new LinkedHashMap<>()), strings[strings.length - 1]);
+            return this.format(StructuralCache.classToMap(aClass, data, new LinkedHashMap<>()), StructuralNameCache.classToName(aClass));
         }
         return this.format(StructuralCache.classToMap(aClass, data, new LinkedHashMap<>()), null);
     }
