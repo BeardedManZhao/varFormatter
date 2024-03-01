@@ -27,6 +27,7 @@ public class XmlNodeObj extends DataObj {
      *                 The name of the current data object may be used by the formatter as a root node or other part.
      * @param dataObjs 当前数据对象内部需要存储的子数据对象
      *                 <p>
+     *                 The child data objects that need to be stored inside the current data object
      */
     public XmlNodeObj(String name, DataObj... dataObjs) {
         super(name, dataObjs);
