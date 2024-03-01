@@ -90,7 +90,7 @@ public class JsonFormatter implements Formatter {
     @Override
     public final String format(Map<?, ?> data, String name) {
         // 完毕之后将结果返回
-        return this.header(name) + this.formatMap(data) + this.footer(name);
+        return this.header(name, data) + this.formatMap(data) + this.footer(name, data);
     }
 
     /**
@@ -208,18 +208,32 @@ public class JsonFormatter implements Formatter {
     }
 
     /**
-     * @param name 需要被格式化的对象的名字。
+     * @param name 需要被进行格式化的字段的名字。
+     *             <p>
+     *             The name of the field that needs to be formatted.
+     * @param o    需要被进行格式化的字段的值。
+     *             <p>
+     *             The value of the field that needs to be formatted.
      * @return 一个数据类型的起始字符串
+     * <p>
+     * The starting string of a data type
      */
-    protected String header(String name) {
+    protected String header(String name, Object o) {
         return "{";
     }
 
     /**
-     * @param name 需要被格式化的对象的名字。
-     * @return 一个数据类型的尾部字符串
+     * @param name 需要被进行格式化的字段的名字。
+     *             <p>
+     *             The name of the field that needs to be formatted.
+     * @param o    需要被进行格式化的字段的值。
+     *             <p>
+     *             The value of the field that needs to be formatted.
+     * @return 一个数据类型的终止字符串
+     * <p>
+     * The end string of a data type
      */
-    protected String footer(String name) {
+    protected String footer(String name, Object o) {
         return "}";
     }
 

@@ -7,7 +7,6 @@ import java.util.HashMap;
 /**
  * 类与类名字的缓冲池，在这里将可以自动的将类的名字解析出来并进行缓存！
  * <p>
- * <p>
  * A buffer pool for classes and class names, where class names can be automatically parsed and cached!
  *
  * @author zhao

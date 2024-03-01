@@ -1,14 +1,13 @@
 package top.lingyuzhao.varFormatter.core;
 
 import top.lingyuzhao.utils.ASClass;
+import top.lingyuzhao.varFormatter.utils.XmlNodeObj;
 
 import java.util.Collection;
 import java.util.Map;
 
 /**
  * xml格式化组件，其中具有自动根据字段返回格式化的名字的功能，此格式化组件需要在格式化的时候将 getName 设置为 true 便于获取到根节点名字。
- *
- * <p>
  * <p>
  * XML formatting component, which has the function of automatically returning formatted names based on fields. This formatting component needs to set getName to true during formatting to obtain the root node name.
  *
@@ -24,13 +23,12 @@ public class XmlFormatter extends JsonFormatter {
         super(formatterType);
     }
 
-    /**
-     * @param name 需要被格式化的对象的名字。
-     * @return 一个数据类型的起始字符串
-     */
     @Override
-    protected String header(String name) {
-        return name == null ? "" : this.formatName_start(name, name);
+    protected String header(String name, Object o) {
+        if (name == null) {
+            return "";
+        }
+        return this.formatName_start(name, o);
     }
 
     /**
@@ -38,8 +36,11 @@ public class XmlFormatter extends JsonFormatter {
      * @return 一个数据类型的起始字符串
      */
     @Override
-    protected String footer(String name) {
-        return name == null ? "" : this.formatName_EndLast(name, name);
+    protected String footer(String name, Object o) {
+        if (name == null) {
+            return "";
+        }
+        return this.formatName_EndLast(name, o);
     }
 
     /**
@@ -59,6 +60,10 @@ public class XmlFormatter extends JsonFormatter {
      */
     @Override
     protected String formatName_start(String name, Object o) {
+        if (o instanceof XmlNodeObj) {
+            // 代表可能有属性
+            name += ((XmlNodeObj) o).getAttrStr();
+        }
         return '<' + name + '>';
     }
 

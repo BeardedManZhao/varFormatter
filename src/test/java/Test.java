@@ -1,8 +1,6 @@
 import top.lingyuzhao.varFormatter.core.Formatter;
 import top.lingyuzhao.varFormatter.core.VarFormatter;
-
-import java.util.ArrayList;
-import java.util.HashMap;
+import top.lingyuzhao.varFormatter.utils.XmlNodeObj;
 
 /**
  * 测试类
@@ -14,32 +12,24 @@ public class Test {
     public static void main(String[] args) {
         // 使用单例模式 获取到 HTML 格式化组件
         final Formatter formatter0 = VarFormatter.HTML.getFormatter(true);
-        // 将对象进行格式化操作 获取到对象的 HTML 结构
-        System.out.println(formatter0.format(new TestObj()));
-    }
+        // 构建一个 body 和 html 标签
+        final XmlNodeObj body = new XmlNodeObj("body");
+        final XmlNodeObj xmlNodeObj = new XmlNodeObj("html", body);
+        // 设置 html 标签的 lang 属性
+        xmlNodeObj.setAttr("lang", "zh");
 
-    // 准备了一个复杂的类
-    static class TestObj {
-        String name = "zhao";
-        int age = 1024;
-        HashMap<String, Object> data = new HashMap<>();
-        TestObj2 testObj2 = new TestObj2();
+        // 设置body标签内部的标签
+        body.put("p", "这里是一些段落文本");
+        // 在body标签内部添加一个div标签
+        final XmlNodeObj div = new XmlNodeObj("div");
+        // 设置 div 标签的属性 这里是设置的字体颜色
+        div.setAttr("style", "color:#0f0");
+        // 设置 div 标签内部的文本
+        div.put("div", "这里是一些 div 中的段落文本");
+        // 把 div 标签提供给 body
+        body.put(div);
 
-        {
-            data.put("k", 123123);
-            data.put("k1", "123123");
-        }
-
-        public static class TestObj2 {
-            String name = "zhao123";
-            ArrayList<Integer> arrayList = new ArrayList<>();
-
-            {
-                arrayList.add(1);
-                arrayList.add(2);
-                arrayList.add(3);
-                arrayList.add(4);
-            }
-        }
+        // 直接打印出 HTML 格式的文本
+        System.out.println(formatter0.format(xmlNodeObj));
     }
 }

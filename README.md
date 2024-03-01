@@ -16,7 +16,7 @@
     <!-- 引入库的依赖 -->
     <dependency>
         <groupId>io.github.BeardedManZhao</groupId>
-        <artifactId>VarFormatter</artifactId>
+        <artifactId>varFormatter</artifactId>
         <version>1.0</version>
     </dependency>
     <!-- 引入库所需要的工具类 -->
@@ -209,6 +209,8 @@ public class Test {
 
 #### 格式化一个 DataObj 对象
 
+此对象是一个内置的数据节点类，可以直接被解析成为一种 Map 的方式来进行格式化，不需要进行任意的结构解析和反射操作，因此性能较号。
+
 ```java
 import top.lingyuzhao.varFormatter.core.Formatter;
 import top.lingyuzhao.varFormatter.core.VarFormatter;
@@ -282,6 +284,61 @@ public class Test {
     }
 }
 
+```
+
+#### 格式化一个 XmlNodeObj 对象
+
+`XmlNodeObj` 是 `DataObj` 的子类，其具有`DataObj` 的所有特点，但是其还具有属性的功能，它能够接收一些属性，格式化组件会按照这个属性自动构造数据。
+
+```java
+import top.lingyuzhao.varFormatter.core.Formatter;
+import top.lingyuzhao.varFormatter.core.VarFormatter;
+import top.lingyuzhao.varFormatter.utils.XmlNodeObj;
+
+/**
+ * 测试类
+ *
+ * @author zhao
+ */
+public class Test {
+
+    public static void main(String[] args) {
+        // 使用单例模式 获取到 HTML 格式化组件
+        final Formatter formatter0 = VarFormatter.HTML.getFormatter(true);
+        // 构建一个 body 和 html 标签
+        final XmlNodeObj body = new XmlNodeObj("body");
+        final XmlNodeObj xmlNodeObj = new XmlNodeObj("html", body);
+        // 设置 html 标签的 lang 属性 
+        xmlNodeObj.setAttr("lang", "zh");
+
+        // 设置body标签内部的标签
+        body.put("p", "这里是一些段落文本");
+        // 在body标签内部添加一个div标签
+        final XmlNodeObj div = new XmlNodeObj("div");
+        // 设置 div 标签的属性 这里是设置的字体颜色
+        div.setAttr("style", "color:#0f0");
+        // 设置 div 标签内部的文本
+        div.put("div", "这里是一些 div 中的段落文本");
+        // 把 div 标签提供给 body
+        body.put(div);
+
+        // 直接打印出 HTML 格式的文本
+        System.out.println(formatter0.format(xmlNodeObj));
+    }
+}
+```
+
+下面是格式化之后的结果
+
+```html
+
+<html lang="zh">
+<body><p>这里是一些段落文本</p>
+<div style="color:#0f0">
+    <div>这里是一些 div 中的段落文本</div>
+</div>
+</body>
+</html>
 ```
 
 ### 各类格式化组件的使用
@@ -443,4 +500,8 @@ public class Test {
 
 ### 2024-03-01
 
-- 初次发布 1.0.0 版本！
+_初次发布 1.0.0 版本！_
+
+- 支持 json xml html 格式化！
+- 提供了 DataObj 和 XmlNodeObj 类，能够用于进行转换。
+- 提供了针对类结构的解析模块，能够将任意的类结构转换为 json xml html 格式！
