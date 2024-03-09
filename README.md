@@ -17,7 +17,7 @@
     <dependency>
         <groupId>io.github.BeardedManZhao</groupId>
         <artifactId>varFormatter</artifactId>
-        <version>1.0</version>
+        <version>1.0.1</version>
     </dependency>
     <!-- 引入库所需要的工具类 -->
     <dependency>
@@ -496,7 +496,108 @@ public class Test {
 </TestObj>
 ```
 
+#### Mermaid 格式化组件演示实例
+
+Mermaid 是一种图结构的格式化组件，它能够将任意的类结构转换为 Mermaid 格式的文本，Mermaid 格式是具有图结构的，您可以将一个对象直接按照 Mermaid
+类结构进行转换，这经常能够适用于观察类结构的场景，接下来就是有关的代码示例！
+
+```
+import top.lingyuzhao.varFormatter.core.Formatter;
+import top.lingyuzhao.varFormatter.core.VarFormatter;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+
+/**
+ * 测试类
+ *
+ * @author zhao
+ */
+public class Test {
+
+    public static void main(String[] args) {
+        // 使用单例模式 获取到 MERMAID 格式化组件
+        final Formatter formatter0 = VarFormatter.MERMAID.getFormatter(true);
+        // 将对象进行格式化操作 获取到对象的 MERMAID 结构图的代码 并打印出来
+        System.out.println("graph LR");
+        System.out.println(formatter0.format(new TestObj()));
+    }
+
+    // 准备了一个复杂的类
+    static class TestObj {
+        String name = "zhao";
+        int age = 1024;
+        HashMap<String, Object> data = new HashMap<>();
+        TestObj2 testObj2 = new TestObj2();
+
+        {
+            data.put("k", 123123);
+            data.put("k1", "123123");
+        }
+
+        public static class TestObj2 {
+            String name = "zhao123";
+            ArrayList<Object> arrayList = new ArrayList<>();
+
+            {
+                arrayList.add(1);
+                arrayList.add(2);
+                arrayList.add(3);
+                arrayList.add(4);
+                // 这里使用了一个 Date 类 增大 类的复杂度
+                arrayList.add(new Date());
+            }
+        }
+    }
+}
+```
+
+下面是运行结果，可以直接做为 Mermaid 图展示！
+
+```mermaid
+graph LR
+TestObj==Map>Map==>TestObj.data
+TestObj.data==Map>String/Number==>TestObj.data.k1
+TestObj.data.k1--Map>value-->TestObj.data.k1v{"123123"}
+TestObj.data==Map>String/Number==>TestObj.data.k
+TestObj.data.k--Map>value-->TestObj.data.kv{"123123"}
+TestObj==Map>String/Number==>TestObj.name
+TestObj.name--Map>value-->TestObj.namev{"zhao"}
+TestObj==Map>String/Number==>TestObj.age
+TestObj.age--Map>value-->TestObj.agev{"1024"}
+TestObj==Map>Object==>TestObj.testObj2
+TestObj.testObj2==Map>String/Number==>TestObj.testObj2.name
+TestObj.testObj2.name--Map>value-->TestObj.testObj2.namev{"zhao123"}
+TestObj.testObj2==Map>Collection==>TestObj.testObj2.arrayList
+TestObj.testObj2.arrayList==Collection>String/Number==>TestObj.testObj2.arrayList.1
+TestObj.testObj2.arrayList.1--Collection>value-->TestObj.testObj2.arrayList.1v(("1"))
+TestObj.testObj2.arrayList==Collection>String/Number==>TestObj.testObj2.arrayList.2
+TestObj.testObj2.arrayList.2--Collection>value-->TestObj.testObj2.arrayList.2v(("2"))
+TestObj.testObj2.arrayList==Collection>String/Number==>TestObj.testObj2.arrayList.3
+TestObj.testObj2.arrayList.3--Collection>value-->TestObj.testObj2.arrayList.3v(("3"))
+TestObj.testObj2.arrayList==Collection>String/Number==>TestObj.testObj2.arrayList.4
+TestObj.testObj2.arrayList.4--Collection>value-->TestObj.testObj2.arrayList.4v(("4"))
+TestObj.testObj2.arrayList==Collection>Object==>TestObj.testObj2.arrayList.5
+TestObj.testObj2.arrayList.5==Map>String/Number==>TestObj.testObj2.arrayList.5.serialVersionUID
+TestObj.testObj2.arrayList.5.serialVersionUID--Map>value-->TestObj.testObj2.arrayList.5.serialVersionUIDv{"7523967970034938905"}
+TestObj.testObj2.arrayList.5==Map>Object==>TestObj.testObj2.arrayList.5.ttb
+TestObj.testObj2.arrayList.5==Map>Object==>TestObj.testObj2.arrayList.5.wtb
+TestObj.testObj2.arrayList.5==Map>String/Number==>TestObj.testObj2.arrayList.5.fastTime
+TestObj.testObj2.arrayList.5.fastTime--Map>value-->TestObj.testObj2.arrayList.5.fastTimev{"1709990413635"}
+TestObj.testObj2.arrayList.5==Map>Object==>TestObj.testObj2.arrayList.5.gcal
+TestObj.testObj2.arrayList.5==Map>String/Number==>TestObj.testObj2.arrayList.5.defaultCenturyStart
+TestObj.testObj2.arrayList.5.defaultCenturyStart--Map>value-->TestObj.testObj2.arrayList.5.defaultCenturyStartv{"0"}
+```
+
 ## 更新记录
+
+### 2024-03-09
+
+_发布 1.0.1 版本！_
+
+- 针对具有 `null` 值的类的转换工作也可以顺利完成了！
+- 增加了 Mermaid 格式化组件！您可以在 《Mermaid 格式化组件演示实例》 小节中查看到相关的调用！
 
 ### 2024-03-01
 

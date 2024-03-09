@@ -114,6 +114,9 @@ public class XmlFormatter extends JsonFormatter {
      */
     @Override
     protected String formatValue(String name, Object value) {
+        if (value == null) {
+            return "null";
+        }
         if (value instanceof Number || value instanceof String) {
             return value.toString();
         }

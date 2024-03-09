@@ -61,8 +61,9 @@ public class DataObj extends LinkedHashMap<String, Object> implements Serializab
      * Associates the specified value with the specified key in this map.
      * If the map previously contained a mapping for the key, the old
      * value is replaced.
-     * @param dataObj 需要被做为子节点的节点数据对象。
      *
+     * @param dataObj 需要被做为子节点的节点数据对象。
+     *                <p>
      *                Node data objects that need to be treated as child nodes.
      */
     public void put(DataObj dataObj) {

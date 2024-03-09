@@ -26,7 +26,14 @@ public enum VarFormatter {
      * <p>
      * Convert any object to a html string format component type, through which the corresponding format component can be directly obtained.
      */
-    HTML(new HtmlFormatter());
+    HTML(new HtmlFormatter()),
+
+    /**
+     * 将任意对象转换为 mermaid 字符串的格式化组件类型，通过此类型可以直接获取到对应的格式化组件。
+     * <p>
+     * Convert any object to a mermaid string format component type, through which the corresponding format component can be directly obtained.
+     */
+    MERMAID(new MermaidFormatter());
 
     /**
      * 格式化器的对象，在这里存储的就是当前类型的格式化器的实现。

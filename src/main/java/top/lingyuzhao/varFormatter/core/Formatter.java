@@ -71,6 +71,26 @@ public interface Formatter extends Cloneable {
      * <p>
      * Format data function, you can directly pass in the data that needs to be formatted here!
      *
+     * @param data         要格式化的数据对象，会将其中的所有字段进行格式化操作，字段名字做为 key 字段类型做为value。
+     *                     <p>
+     *                     The data object to be formatted will have all its fields formatted, with field names as key and field types as value.
+     * @param dataClassObj data 参数对应的实例的Class 类对象！
+     *                     <p>
+     *                     The Class object of the instance corresponding to the data parameter!
+     * @param name         格式化操作中需要使用的名字
+     *                     <p>
+     *                     Names required for formatting operations
+     * @return 对象被格式化操作执行之后的结果
+     * <p>
+     * The result of an object after being formatted
+     */
+    String format(Object data, Class<?> dataClassObj, String name);
+
+    /**
+     * 格式化数据函数，您可以在这里直接将需要被进行格式化的数据传递进来！
+     * <p>
+     * Format data function, you can directly pass in the data that needs to be formatted here!
+     *
      * @param data    要格式化的数据对象，会将其中的所有字段进行格式化操作，字段名字做为 key 字段类型做为value。
      * @param getName 在格式化操作开始之前，先获取到当前类的名字，用来进行根节点生成，有些数据类型可能会需要，有些则不会需要 如果不需要就设置为 false
      *                <p>
