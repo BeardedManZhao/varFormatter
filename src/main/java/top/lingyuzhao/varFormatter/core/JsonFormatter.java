@@ -2,6 +2,9 @@ package top.lingyuzhao.varFormatter.core;
 
 import top.lingyuzhao.utils.ASClass;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Collection;
 import java.util.Map;
 
@@ -33,6 +36,26 @@ public class JsonFormatter extends ManualFormatter {
      */
     protected JsonFormatter(VarFormatter formatterType) {
         super(formatterType);
+    }
+
+    @Override
+    public void formatToStream(Map<?, ?> data, String name, PrintWriter printWriter) {
+        int count = 0;
+        final int size = data.size();
+        for (Map.Entry<?, ?> stringObjectEntry : data.entrySet()) {
+            final String k = stringObjectEntry.getKey().toString();
+            final Object v = stringObjectEntry.getValue();
+            count = getCount(k, printWriter, count, size, v);
+        }
+    }
+
+    @Override
+    public void formatToStream(Collection<?> data, String name, PrintWriter printWriter) {
+        int count = 0;
+        final int size = data.size();
+        for (Object v : data) {
+            count = getCount(name, printWriter, count, size, v);
+        }
     }
 
     /**
@@ -88,15 +111,12 @@ public class JsonFormatter extends ManualFormatter {
      * The result of a Map object after being formatted
      */
     public String formatMap(Map<?, ?> data) {
-        StringBuilder stringBuilder = new StringBuilder();
-        int count = 0;
-        final int size = data.size();
-        for (Map.Entry<?, ?> stringObjectEntry : data.entrySet()) {
-            final String k = stringObjectEntry.getKey().toString();
-            final Object v = stringObjectEntry.getValue();
-            count = getCount(k, stringBuilder, count, size, v);
+        try(StringWriter stringWriter = new StringWriter(); PrintWriter printWriter = new PrintWriter(stringWriter)){
+            this.formatToStream(data, printWriter);
+            return stringWriter.toString();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        return stringBuilder.toString();
     }
 
     /**
@@ -115,16 +135,15 @@ public class JsonFormatter extends ManualFormatter {
      * The result of a Map object after being formatted
      */
     public String formatList(Collection<?> data, String name) {
-        StringBuilder stringBuilder = new StringBuilder();
-        int count = 0;
-        final int size = data.size();
-        for (Object v : data) {
-            count = getCount(name, stringBuilder, count, size, v);
+        try(StringWriter stringWriter = new StringWriter(); PrintWriter printWriter = new PrintWriter(stringWriter)){
+            this.formatToStream(data, name, printWriter);
+            return stringWriter.toString();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        return stringBuilder.toString();
     }
 
-    private int getCount(String name, StringBuilder stringBuilder, int count, int size, Object v) {
+    private int getCount(String name, PrintWriter stringBuilder, int count, int size, Object v) {
         if (++count == size) {
             // 如果是最后一个就直接将 formatName_start formatName_EndLast 调用
             stringBuilder.append(this.formatName_start(name, v)).append(this.formatValue(name, v)).append(this.formatName_EndLast(name, v));

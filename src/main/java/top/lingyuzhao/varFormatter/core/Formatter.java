@@ -1,6 +1,7 @@
 package top.lingyuzhao.varFormatter.core;
 
 
+import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.Map;
 
@@ -19,6 +20,102 @@ public interface Formatter extends Cloneable {
      * The current model of the formatted component, which is also the type of data that can be formatted.
      */
     VarFormatter getFormatterType();
+
+    /**
+     * 将一个 Object 对象进行格式化操作，会自动的将其中的 key 和 value 按照一定的格式进行解析和计算，获取到最终结果。
+     * <p>
+     * Formatting an object will automatically parse and calculate the key and value in a certain format to obtain the final result.
+     *
+     * @param data        要格式化的 Object 对象
+     *                    <p>
+     *                    Object to format
+     * @param printWriter 转换结果的数据输出流，转换的结果会存储进这个数据流中！
+     *                    <p>
+     *                    The data output stream of the conversion result will be stored in this data stream!
+     */
+    void formatToStream(Object data, PrintWriter printWriter);
+
+    /**
+     * 将一个 Object 对象进行格式化操作，会自动的将其中的 key 和 value 按照一定的格式进行解析和计算，获取到最终结果。
+     * <p>
+     * Formatting an object will automatically parse and calculate the key and value in a certain format to obtain the final result.
+     *
+     * @param data        要格式化的 Object 对象
+     *                    <p>
+     *                    Object to format
+     * @param getName     在格式化操作开始之前，先获取到当前类的名字，用来进行根节点生成，有些数据类型可能会需要，有些则不会需要 如果不需要就设置为 false
+     *                    <p>
+     *                    Before starting the formatting operation, obtain the name of the current class for root node generation. Some data types may require it, while others may not
+     * @param printWriter 转换结果的数据输出流，转换的结果会存储进这个数据流中！
+     *                    <p>
+     *                    The data output stream of the conversion result will be stored in this data stream!
+     */
+    void formatToStream(Object data, boolean getName, PrintWriter printWriter);
+
+    /**
+     * 将一个 Object 对象进行格式化操作，会自动的将其中的 key 和 value 按照一定的格式进行解析和计算，获取到最终结果。
+     * <p>
+     * Formatting an object will automatically parse and calculate the key and value in a certain format to obtain the final result.
+     *
+     * @param data         要格式化的数据对象，会将其中的所有字段进行格式化操作，字段名字做为 key 字段类型做为value。
+     *                     <p>
+     *                     The data object to be formatted will have all its fields formatted, with field names as key and field types as value.
+     * @param dataClassObj data 参数对应的实例的Class 类对象！
+     *                     <p>
+     *                     The Class object of the instance corresponding to the data parameter!
+     * @param name         格式化操作中需要使用的名字
+     *                     <p>
+     *                     Names required for formatting operations
+     * @param printWriter  转换结果的数据输出流，转换的结果会存储进这个数据流中！
+     *                     <p>
+     *                     The data output stream of the conversion result will be stored in this data stream!
+     */
+    void formatToStream(Object data, Class<?> dataClassObj, String name, PrintWriter printWriter);
+
+    /**
+     * 格式化一个 Map 对象，会自动的将其中的 key 和 value 按照一定的格式进行解析和计算，获取到最终结果。
+     * <p>
+     * Formatting a Map object will automatically parse and calculate the key and value in a certain format to obtain the final result.!
+     *
+     * @param data        要格式化的 Map 对象
+     *                    <p>
+     *                    object to format
+     * @param printWriter 转换结果的数据输出流，转换的结果会存储进这个数据流中！
+     *                    <p>
+     *                    The data output stream of the conversion result will be stored in this data stream!
+     */
+    void formatToStream(Map<?, ?> data, PrintWriter printWriter);
+
+    /**
+     * 格式化一个 List 对象，会自动的将其中的 key 和 value 按照一定的格式进行解析和计算，获取到最终结果。
+     * <p>
+     * Formatting a Map object will automatically parse and calculate the key and value in a certain format to obtain the final result.!
+     *
+     * @param data        要格式化的 List 对象
+     *                    <p>
+     *                    object to format
+     * @param name        在格式化操作中 需要做为 key 的名称
+     * @param printWriter 转换结果的数据输出流，转换的结果会存储进这个数据流中！
+     *                    <p>
+     *                    The data output stream of the conversion result will be stored in this data stream!
+     */
+    void formatToStream(Map<?, ?> data, String name, PrintWriter printWriter);
+
+    /**
+     * 格式化一个 List 对象，会自动的将其中的 key 和 value 按照一定的格式进行解析和计算，获取到最终结果。
+     * <p>
+     * Formatting a Map object will automatically parse and calculate the key and value in a certain format to obtain the final result.!
+     *
+     * @param data        要格式化的 List 对象
+     *                    <p>
+     *                    object to format
+     * @param name        在格式化操作中 需要做为 key 的名称
+     * @param printWriter 转换结果的数据输出流，转换的结果会存储进这个数据流中！
+     *                    <p>
+     *                    The data output stream of the conversion result will be stored in this data stream!
+     */
+    void formatToStream(Collection<?> data, String name, PrintWriter printWriter);
+
 
     /**
      * 格式化一个 Map 对象，会自动的将其中的 key 和 value 按照一定的格式进行解析和计算，获取到最终结果。

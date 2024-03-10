@@ -592,13 +592,197 @@ TestObj.testObj2.arrayList.5==Map>String/Number==>TestObj.testObj2.arrayList.5.d
 TestObj.testObj2.arrayList.5.defaultCenturyStart--Map>value-->TestObj.testObj2.arrayList.5.defaultCenturyStartv{"0"}
 ```
 
+### 数据输出方法的示例
+
+库中针对一个实例进行格式转换之后会将结果返回给用户，而返回的结果可以是字符串或者数据流，下面就是关于数据流输出的示例！
+
+#### 字符串输出
+
+您可以调用 `Formatter.format` 方法进行字符串输出！这样的操作从库的首个版本发布之后就被支持了，您可以很方便地使用它，在上面的诸多示例中使用的也是字符串输出，下面是一个示例！
+
+```java
+import top.lingyuzhao.varFormatter.core.Formatter;
+import top.lingyuzhao.varFormatter.core.VarFormatter;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+/**
+ * 测试类
+ *
+ * @author zhao
+ */
+public class Test {
+
+    public static void main(String[] args) {
+        // 使用单例模式 获取到 MERMAID 格式化组件
+        final Formatter formatter0 = VarFormatter.MERMAID.getFormatter(true);
+        // 将对象进行格式化操作 获取到对象的 MERMAID 结构图的代码
+        System.out.println("graph LR");
+        System.out.println(formatter0.format(new TestObj()));
+    }
+
+    // 准备了一个复杂的类
+    static class TestObj {
+        String name = "zhao";
+        int age = 1024;
+        HashMap<String, Object> data = new HashMap<>();
+        TestObj2 testObj2 = new TestObj2();
+
+        {
+            data.put("k", 123123);
+            data.put("k1", "123123");
+            data.put("k2", new HashMap<>());
+        }
+
+        public static class TestObj2 {
+            String name = "zhao123";
+            ArrayList<Object> arrayList = new ArrayList<>();
+
+            {
+                arrayList.add(1);
+                arrayList.add(2);
+                arrayList.add(3);
+                arrayList.add(4);
+            }
+        }
+    }
+}
+```
+
+下面就是运行结果
+
+```mermaid
+graph LR
+map==Map>Map==>map.data
+map.data==Map>String/Number==>map.data.k1
+map.data.k1--Map>value-->map.data.k1v{"123123"}
+map.data==Map>Map==>map.data.k2
+map.data==Map>String/Number==>map.data.k
+map.data.k--Map>value-->map.data.kv{"123123"}
+map==Map>String/Number==>map.name
+map.name--Map>value-->map.namev{"zhao"}
+map==Map>String/Number==>map.age
+map.age--Map>value-->map.agev{"1024"}
+map==Map>Object==>map.testObj2
+map.testObj2==Map>String/Number==>map.testObj2.name
+map.testObj2.name--Map>value-->map.testObj2.namev{"zhao123"}
+map.testObj2==Map>Collection==>map.testObj2.arrayList
+map.testObj2.arrayList==Collection>String/Number==>map.testObj2.arrayList.1
+map.testObj2.arrayList.1--Collection>value-->map.testObj2.arrayList.1v(("1"))
+map.testObj2.arrayList==Collection>String/Number==>map.testObj2.arrayList.2
+map.testObj2.arrayList.2--Collection>value-->map.testObj2.arrayList.2v(("2"))
+map.testObj2.arrayList==Collection>String/Number==>map.testObj2.arrayList.3
+map.testObj2.arrayList.3--Collection>value-->map.testObj2.arrayList.3v(("3"))
+map.testObj2.arrayList==Collection>String/Number==>map.testObj2.arrayList.4
+map.testObj2.arrayList.4--Collection>value-->map.testObj2.arrayList.4v(("4"))
+```
+
+#### 数据流输出
+
+在 1.0.2 版本中，我们添加了数据流输出方法，您可以调用 `Formatter.formatToStream` 方法进行数据流输出！下面是一个示例！
+
+```java
+import top.lingyuzhao.varFormatter.core.Formatter;
+import top.lingyuzhao.varFormatter.core.VarFormatter;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+
+/**
+ * 测试类
+ *
+ * @author zhao
+ */
+public class Test {
+
+    public static void main(String[] args) throws IOException {
+        // 获取到一个字符串数据输出流
+        try (
+                final StringWriter stringWriter = new StringWriter();
+                final PrintWriter bufferedWriter = new PrintWriter(stringWriter)
+        ) {
+            // 使用单例模式 获取到 MERMAID 格式化组件
+            final Formatter formatter0 = VarFormatter.MERMAID.getFormatter(true);
+            // 将对象进行格式化操作 获取到对象的 MERMAID 结构图的代码 并写到 bufferedWriter 中
+            // 只需要调用 formatToStream 函数即可
+            formatter0.formatToStream(new TestObj(), bufferedWriter);
+            // 查看 stringWriter 中是否有数据
+            // 由于是往 bufferedWriter 里面写的数据 bufferedWriter 中的数据流是 stringWriter
+            // 因此相当于是往 stringWriter 中写入了数据
+            System.out.println("graph LR");
+            System.out.println(stringWriter);
+        }
+    }
+
+    // 准备了一个复杂的类
+    static class TestObj {
+        String name = "zhao";
+        int age = 1024;
+        HashMap<String, Object> data = new HashMap<>();
+        TestObj2 testObj2 = new TestObj2();
+
+        {
+            data.put("k", 123123);
+            data.put("k1", "123123");
+            data.put("k2", new HashMap<>());
+        }
+
+        public static class TestObj2 {
+            String name = "zhao123";
+            ArrayList<Object> arrayList = new ArrayList<>();
+
+            {
+                arrayList.add(1);
+                arrayList.add(2);
+                arrayList.add(3);
+                arrayList.add(4);
+            }
+        }
+    }
+}
+```
+
+下面就是运行结果！
+
+```mermaid
+graph LR
+TestObj==Map>Map==>TestObj.data
+TestObj.data==Map>String/Number==>TestObj.data.k1
+TestObj.data.k1--Map>value-->TestObj.data.k1v{"123123"}
+TestObj.data==Map>Map==>TestObj.data.k2
+TestObj.data==Map>String/Number==>TestObj.data.k
+TestObj.data.k--Map>value-->TestObj.data.kv{"123123"}
+TestObj==Map>String/Number==>TestObj.name
+TestObj.name--Map>value-->TestObj.namev{"zhao"}
+TestObj==Map>String/Number==>TestObj.age
+TestObj.age--Map>value-->TestObj.agev{"1024"}
+TestObj==Map>Object==>TestObj.testObj2
+TestObj.testObj2==Map>String/Number==>TestObj.testObj2.name
+TestObj.testObj2.name--Map>value-->TestObj.testObj2.namev{"zhao123"}
+TestObj.testObj2==Map>Collection==>TestObj.testObj2.arrayList
+TestObj.testObj2.arrayList==Collection>String/Number==>TestObj.testObj2.arrayList.1
+TestObj.testObj2.arrayList.1--Collection>value-->TestObj.testObj2.arrayList.1v(("1"))
+TestObj.testObj2.arrayList==Collection>String/Number==>TestObj.testObj2.arrayList.2
+TestObj.testObj2.arrayList.2--Collection>value-->TestObj.testObj2.arrayList.2v(("2"))
+TestObj.testObj2.arrayList==Collection>String/Number==>TestObj.testObj2.arrayList.3
+TestObj.testObj2.arrayList.3--Collection>value-->TestObj.testObj2.arrayList.3v(("3"))
+TestObj.testObj2.arrayList==Collection>String/Number==>TestObj.testObj2.arrayList.4
+TestObj.testObj2.arrayList.4--Collection>value-->TestObj.testObj2.arrayList.4v(("4"))
+```
+
 ## 更新记录
 
 ### 2024-03-xx
 
-_开发 1.0.2 版本！【此版本还未发布！】
+_开发 1.0.2 版本！【此版本还未发布！】_
 
 - 增加了 yaml 格式化组件！
+- 增加了数据流的格式转换结果输出方法！
 
 ### 2024-03-09
 

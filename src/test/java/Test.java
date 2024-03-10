@@ -1,8 +1,10 @@
 import top.lingyuzhao.varFormatter.core.Formatter;
 import top.lingyuzhao.varFormatter.core.VarFormatter;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -12,11 +14,19 @@ import java.util.HashMap;
  */
 public class Test {
 
-    public static void main(String[] args) {
-        // 使用单例模式 获取到 MERMAID 格式化组件
-        final Formatter formatter0 = VarFormatter.YAML.getFormatter(true);
-        // 将对象进行格式化操作 获取到对象的 MERMAID 结构图的代码 并打印出来
-        System.out.println(formatter0.format(new TestObj()));
+    public static void main(String[] args) throws IOException {
+        // 使用单例模式 获取到 json 格式化组件
+        final Formatter formatter0 = VarFormatter.XML.getFormatter(true);
+        // 实例化两个 TestObj 对象
+        TestObj testObj1 = new TestObj();
+        TestObj testObj2 = new TestObj();
+        // 修改第二个对象中的 age 为 2048
+        testObj2.age = 2048;
+        // 将两个对象进行格式化操作 获取到对象的 json 结构
+        try(final StringWriter stringWriter = new StringWriter(); final PrintWriter printWriter = new PrintWriter(stringWriter)){
+            formatter0.formatToStream(testObj1, printWriter);
+            System.out.println(stringWriter);
+        }
     }
 
     // 准备了一个复杂的类
@@ -33,15 +43,13 @@ public class Test {
 
         public static class TestObj2 {
             String name = "zhao123";
-            ArrayList<Object> arrayList = new ArrayList<>();
+            ArrayList<Integer> arrayList = new ArrayList<>();
 
             {
                 arrayList.add(1);
                 arrayList.add(2);
                 arrayList.add(3);
                 arrayList.add(4);
-                // 这里使用了一个 Date 类 增大 类的复杂度
-                arrayList.add(new Date());
             }
         }
     }

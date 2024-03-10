@@ -2,6 +2,10 @@ package top.lingyuzhao.varFormatter.core;
 
 import top.lingyuzhao.varFormatter.utils.DataObj;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -99,6 +103,81 @@ public abstract class ManualFormatter implements Formatter {
     public final String format(Map<?, ?> data) {
         // 完毕之后将结果返回
         return this.format(data, data instanceof DataObj ? ((DataObj) data).getName() : "map");
+    }
+
+    /**
+     * 格式化一个 Map 对象，会自动的将其中的 key 和 value 按照一定的格式进行解析和计算，获取到最终结果。
+     * <p>
+     * Formatting a Map object will automatically parse and calculate the key and value in a certain format to obtain the final result.!
+     *
+     * @param data 要格式化的 Map 对象
+     *             <p>
+     *             object to format
+     * @param name 在格式化操作中 需要做为结果的名称，不一定会使用，但也说不定会用到！
+     *             <p>
+     *             The name that needs to be used as the result in the formatting operation may not be used, but it may also be used!
+     * @return Map 对象被格式化操作执行之后的结果
+     * <p>
+     * The result of a Map object after being formatted
+     */
+    @Override
+    public String format(Map<?, ?> data, String name) {
+        try (final StringWriter stringWriter = new StringWriter();
+             final PrintWriter printWriter = new PrintWriter(stringWriter)) {
+            this.formatToStream(data, printWriter);
+            return stringWriter.toString();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 格式化一个 List 对象，会自动的将其中的 key 和 value 按照一定的格式进行解析和计算，获取到最终结果。
+     * <p>
+     * Formatting a Map object will automatically parse and calculate the key and value in a certain format to obtain the final result.!
+     *
+     * @param data 要格式化的 List 对象
+     *             <p>
+     *             object to format
+     * @param name 在格式化操作中 需要做为 key 的名称
+     * @return Map 对象被格式化操作执行之后的结果
+     * <p>
+     * The result of a Map object after being formatted
+     */
+    @Override
+    public String format(Collection<?> data, String name) {
+        try (final StringWriter stringWriter = new StringWriter();
+             final PrintWriter printWriter = new PrintWriter(stringWriter)) {
+            this.formatToStream(data, printWriter);
+            return stringWriter.toString();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void formatToStream(Object data, PrintWriter printWriter) {
+        this.formatToStream(data, true, printWriter);
+    }
+
+    @Override
+    public void formatToStream(Object data, boolean getName, PrintWriter printWriter) {
+        if (data == null) {
+            this.formatToStream(new HashMap<>(), printWriter);
+            return;
+        }
+        final Class<?> aClass = data instanceof Class ? (Class<?>) data : data.getClass();
+        this.formatToStream(data, aClass, getName ? StructuralNameCache.classToName(aClass) : null, printWriter);
+    }
+
+    @Override
+    public void formatToStream(Object data, Class<?> dataClassObj, String name, PrintWriter printWriter) {
+        this.formatToStream(StructuralCache.classToMap(dataClassObj, data), name, printWriter);
+    }
+
+    @Override
+    public void formatToStream(Map<?, ?> data, PrintWriter printWriter) {
+        this.formatToStream(data, data instanceof DataObj ? ((DataObj) data).getName() : "map", printWriter);
     }
 
     /**

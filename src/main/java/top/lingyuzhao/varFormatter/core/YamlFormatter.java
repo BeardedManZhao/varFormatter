@@ -1,9 +1,15 @@
 package top.lingyuzhao.varFormatter.core;
 
+import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
 
 /**
+ * yaml 格式化转换器，能够将一个对象进行格式化，生成 yaml 格式的数据！
+ * <p>
+ * YAML formatting converter, capable of formatting an object and generating YAML formatted data!
+ *
  * @author zhao
  */
 public class YamlFormatter extends ManualFormatter {
@@ -35,28 +41,43 @@ public class YamlFormatter extends ManualFormatter {
         return super.format(data, dataClassObj, name + ": ");
     }
 
-    public String format(Object data, Class<?> dataClassObj, String name, String rowTab) {
-        return this.format(StructuralCache.classToMap(dataClassObj, data), name, rowTab);
-    }
-
     /**
-     * 格式化一个 Map 对象，会自动的将其中的 key 和 value 按照一定的格式进行解析和计算，获取到最终结果。
+     * 格式化一个 List 对象，会自动的将其中的 key 和 value 按照一定的格式进行解析和计算，获取到最终结果。
      * <p>
      * Formatting a Map object will automatically parse and calculate the key and value in a certain format to obtain the final result.!
      *
-     * @param data 要格式化的 Map 对象
-     *             <p>
-     *             object to format
-     * @param name 在格式化操作中 需要做为结果的名称，不一定会使用，但也说不定会用到！
-     *             <p>
-     *             The name that needs to be used as the result in the formatting operation may not be used, but it may also be used!
-     * @return Map 对象被格式化操作执行之后的结果
-     * <p>
-     * The result of a Map object after being formatted
+     * @param data        要格式化的 List 对象
+     *                    <p>
+     *                    object to format
+     * @param name        在格式化操作中 需要做为 key 的名称
+     * @param printWriter 转换结果的数据输出流，转换的结果会存储进这个数据流中！
+     *                    <p>
      */
     @Override
-    public String format(Map<?, ?> data, String name) {
-        return this.format(data, name, "\n\t");
+    public void formatToStream(Map<?, ?> data, String name, PrintWriter printWriter) {
+        this.format(data, name, "\n\t", printWriter);
+    }
+
+    /**
+     * 格式化一个 List 对象，会自动的将其中的 key 和 value 按照一定的格式进行解析和计算，获取到最终结果。
+     * <p>
+     * Formatting a Map object will automatically parse and calculate the key and value in a certain format to obtain the final result.!
+     *
+     * @param data        要格式化的 List 对象
+     *                    <p>
+     *                    object to format
+     * @param name        在格式化操作中 需要做为 key 的名称
+     * @param printWriter 转换结果的数据输出流，转换的结果会存储进这个数据流中！
+     *                    <p>
+     */
+    @Override
+    public void formatToStream(Collection<?> data, String name, PrintWriter printWriter) {
+        this.format(data, name, "\n\t", printWriter);
+    }
+
+
+    public void format(Object data, Class<?> dataClassObj, String name, String rowTab, PrintWriter printWriter) {
+        this.format(StructuralCache.classToMap(dataClassObj, data), name, rowTab, printWriter);
     }
 
     /**
@@ -64,34 +85,35 @@ public class YamlFormatter extends ManualFormatter {
      * <p>
      * Formatting a Map object will automatically parse and calculate the key and value in a certain format to obtain the final result.!
      *
-     * @param data 要格式化的 Map 对象
-     *             <p>
-     *             object to format
-     * @param name 在格式化操作中 需要做为结果的名称，不一定会使用，但也说不定会用到！
-     *             <p>
-     *             The name that needs to be used as the result in the formatting operation may not be used, but it may also be used!
-     * @return Map 对象被格式化操作执行之后的结果
-     * <p>
-     * The result of a Map object after being formatted
+     * @param data          要格式化的 Map 对象
+     *                      <p>
+     *                      object to format
+     * @param name          在格式化操作中 需要做为结果的名称，不一定会使用，但也说不定会用到！
+     *                      <p>
+     *                      The name that needs to be used as the result in the formatting operation may not be used, but it may also be used!
+     * @param stringBuilder 转换结果的数据输出流，转换的结果会存储进这个数据流中！
+     *                      <p>
+     *                      The data output stream of the conversion result will be stored in this data stream!
      */
-    public String format(Map<?, ?> data, String name, String rowTab) {
-        StringBuilder stringBuilder = new StringBuilder();
+    public void format(Map<?, ?> data, String name, String rowTab, PrintWriter stringBuilder) {
         stringBuilder.append(name);
         data.forEach((k, v) -> {
             final String subName = k.toString() + ": ";
             if (v == null) {
                 stringBuilder.append(rowTab).append(subName).append("null");
             } else if (v instanceof Map) {
-                stringBuilder.append(rowTab).append(this.format((Map<?, ?>) v, subName, rowTab + '\t'));
+                stringBuilder.append(rowTab);
+                this.format((Map<?, ?>) v, subName, rowTab + '\t', stringBuilder);
             } else if (v instanceof Collection) {
-                stringBuilder.append(rowTab).append(this.format((Collection<?>) v, subName, rowTab + '\t'));
+                stringBuilder.append(rowTab);
+                this.format((Collection<?>) v, subName, rowTab + '\t', stringBuilder);
             } else if (v instanceof String || v instanceof Number) {
-                stringBuilder.append(rowTab).append(subName).append(v);
+                stringBuilder.append(rowTab).append(subName).append(Objects.toString(v));
             } else {
-                stringBuilder.append(rowTab).append(this.format(v, v.getClass(), subName, rowTab + '\t'));
+                stringBuilder.append(rowTab);
+                this.format(v, v.getClass(), subName, rowTab + '\t', stringBuilder);
             }
         });
-        return stringBuilder.toString();
     }
 
     /**
@@ -99,52 +121,35 @@ public class YamlFormatter extends ManualFormatter {
      * <p>
      * Formatting a Map object will automatically parse and calculate the key and value in a certain format to obtain the final result.!
      *
-     * @param data 要格式化的 List 对象
-     *             <p>
-     *             object to format
-     * @param name 在格式化操作中 需要做为 key 的名称
-     * @return Map 对象被格式化操作执行之后的结果
-     * <p>
-     * The result of a Map object after being formatted
+     * @param data        要格式化的 List 对象
+     *                    <p>
+     *                    object to format
+     * @param name        在格式化操作中 需要做为 key 的名称
+     * @param printWriter 转换结果的数据输出流，转换的结果会存储进这个数据流中！
+     *                    <p>
+     *                    The data output stream of the conversion result will be stored in this data stream!
      */
-    @Override
-    public String format(Collection<?> data, String name) {
-        return this.format(data, name, "\t");
-    }
-
-    /**
-     * 格式化一个 List 对象，会自动的将其中的 key 和 value 按照一定的格式进行解析和计算，获取到最终结果。
-     * <p>
-     * Formatting a Map object will automatically parse and calculate the key and value in a certain format to obtain the final result.!
-     *
-     * @param data 要格式化的 List 对象
-     *             <p>
-     *             object to format
-     * @param name 在格式化操作中 需要做为 key 的名称
-     * @return Map 对象被格式化操作执行之后的结果
-     * <p>
-     * The result of a Map object after being formatted
-     */
-    public String format(Collection<?> data, String name, String rowTab) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(name);
+    public void format(Collection<?> data, String name, String rowTab, PrintWriter printWriter) {
+        printWriter.append(name);
         for (Object v : data) {
             if (v == null) {
                 continue;
             }
             if (v instanceof Map) {
-                stringBuilder.append(rowTab).append(this.format((Map<?, ?>) v, "- ", rowTab + '\t'));
+                printWriter.append(rowTab);
+                this.format((Map<?, ?>) v, "- ", rowTab + '\t', printWriter);
             } else if (v instanceof Collection) {
-                stringBuilder.append(rowTab).append(this.format((Collection<?>) v, "- ", rowTab + '\t'));
+                printWriter.append(rowTab);
+                this.format((Collection<?>) v, "- ", rowTab + '\t', printWriter);
             } else if (v instanceof String) {
-                stringBuilder.append(rowTab).append('-').append(' ').append('"').append(v).append('"');
+                printWriter.append(rowTab).append('-').append(' ').append('"').append(Objects.toString(v)).append('"');
             } else if (v instanceof Number) {
-                stringBuilder.append(rowTab).append('-').append(' ').append(v);
+                printWriter.append(rowTab).append('-').append(' ').append(Objects.toString(v));
             } else {
-                stringBuilder.append(rowTab).append(this.format(v, v.getClass(), "- ", rowTab + '\t'));
+                printWriter.append(rowTab);
+                this.format(v, v.getClass(), "- ", rowTab + '\t', printWriter);
             }
         }
-        return stringBuilder.toString();
     }
 
 }
