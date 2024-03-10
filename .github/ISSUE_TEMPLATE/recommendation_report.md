@@ -1,5 +1,5 @@
 ---
-name: Bug report
+name: Recommendation report
 about: Create a report to help us improve
 title: "【建议提交】【您使用的版本】【建议描述标题】"
 labels: 'recommendation'
