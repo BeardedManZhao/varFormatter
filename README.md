@@ -503,7 +503,7 @@ public class Test {
 Mermaid 是一种图结构的格式化组件，它能够将任意的类结构转换为 Mermaid 格式的文本，Mermaid 格式是具有图结构的，您可以将一个对象直接按照 Mermaid
 类结构进行转换，这经常能够适用于观察类结构的场景，接下来就是有关的代码示例！
 
-```
+```java
 import top.lingyuzhao.varFormatter.core.Formatter;
 import top.lingyuzhao.varFormatter.core.VarFormatter;
 
@@ -593,6 +593,12 @@ TestObj.testObj2.arrayList.5.defaultCenturyStart--Map>value-->TestObj.testObj2.a
 ```
 
 ## 更新记录
+
+### 2024-03-xx
+
+_开发 1.0.2 版本！【此版本还未发布！】
+
+- 增加了 yaml 格式化组件！
 
 ### 2024-03-09
 

@@ -28,6 +28,8 @@ public enum VarFormatter {
      */
     HTML(new HtmlFormatter()),
 
+    YAML(new YamlFormatter()),
+
     /**
      * 将任意对象转换为 mermaid 字符串的格式化组件类型，通过此类型可以直接获取到对应的格式化组件。
      * <p>
