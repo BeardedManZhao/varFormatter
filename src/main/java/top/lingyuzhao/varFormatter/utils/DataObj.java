@@ -16,7 +16,7 @@ public class DataObj extends LinkedHashMap<String, Object> implements Serializab
      * <p>
      * Serialization number
      */
-    public static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * 当前数据对象的名称，可能会被格式化器用作根节点或其它部分。

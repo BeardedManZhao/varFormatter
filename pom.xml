@@ -5,7 +5,7 @@
 
     <groupId>io.github.BeardedManZhao</groupId>
     <artifactId>varFormatter</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <packaging>jar</packaging>
     <name>varFormatter</name>
     <description>varFormatter-java</description>
@@ -20,7 +20,7 @@
         <dependency>
             <groupId>io.github.BeardedManZhao</groupId>
             <artifactId>zhao-utils</artifactId>
-            <version>1.0.20240121</version>
+            <version>1.0.20240315</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
@@ -28,7 +28,7 @@
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
             <distribution>repo</distribution>
         </license>
     </licenses>

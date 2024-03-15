@@ -1,5 +1,7 @@
 package top.lingyuzhao.varFormatter.core;
 
+import top.lingyuzhao.varFormatter.utils.StrUtils;
+
 import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.Map;
@@ -52,6 +54,7 @@ public class YamlFormatter extends ManualFormatter {
      * @param name        在格式化操作中 需要做为 key 的名称
      * @param printWriter 转换结果的数据输出流，转换的结果会存储进这个数据流中！
      *                    <p>
+     *                    The data output stream of the conversion result, and the result of the conversion will be stored in this data stream!
      */
     @Override
     public void formatToStream(Map<?, ?> data, String name, PrintWriter printWriter) {
@@ -69,6 +72,7 @@ public class YamlFormatter extends ManualFormatter {
      * @param name        在格式化操作中 需要做为 key 的名称
      * @param printWriter 转换结果的数据输出流，转换的结果会存储进这个数据流中！
      *                    <p>
+     *                    The data output stream of the conversion result, and the result of the conversion will be stored in this data stream!
      */
     @Override
     public void formatToStream(Collection<?> data, String name, PrintWriter printWriter) {
@@ -88,6 +92,9 @@ public class YamlFormatter extends ManualFormatter {
      * @param data          要格式化的 Map 对象
      *                      <p>
      *                      object to format
+     * @param rowTab        制表符前缀
+     *                      <p>
+     *                      Tab prefix
      * @param name          在格式化操作中 需要做为结果的名称，不一定会使用，但也说不定会用到！
      *                      <p>
      *                      The name that needs to be used as the result in the formatting operation may not be used, but it may also be used!
@@ -108,7 +115,7 @@ public class YamlFormatter extends ManualFormatter {
                 stringBuilder.append(rowTab);
                 this.format((Collection<?>) v, subName, rowTab + '\t', stringBuilder);
             } else if (v instanceof String || v instanceof Number) {
-                stringBuilder.append(rowTab).append(subName).append(Objects.toString(v));
+                stringBuilder.append(rowTab).append(subName).append(StrUtils.escapeNewline(Objects.toString(v)));
             } else {
                 stringBuilder.append(rowTab);
                 this.format(v, v.getClass(), subName, rowTab + '\t', stringBuilder);
@@ -125,6 +132,9 @@ public class YamlFormatter extends ManualFormatter {
      *                    <p>
      *                    object to format
      * @param name        在格式化操作中 需要做为 key 的名称
+     * @param rowTab        制表符前缀
+     *                      <p>
+     *                      Tab prefix
      * @param printWriter 转换结果的数据输出流，转换的结果会存储进这个数据流中！
      *                    <p>
      *                    The data output stream of the conversion result will be stored in this data stream!

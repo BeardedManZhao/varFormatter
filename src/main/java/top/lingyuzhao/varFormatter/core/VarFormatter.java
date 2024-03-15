@@ -28,6 +28,11 @@ public enum VarFormatter {
      */
     HTML(new HtmlFormatter()),
 
+    /**
+     * 将任意对象转换为 yaml 字符串的格式化组件类型，通过此类型可以直接获取到对应的格式化组件。
+     * <p>
+     * Convert any object to a yaml string format component type, through which the corresponding format component can be directly obtained.
+     */
     YAML(new YamlFormatter()),
 
     /**
@@ -35,7 +40,14 @@ public enum VarFormatter {
      * <p>
      * Convert any object to a mermaid string format component type, through which the corresponding format component can be directly obtained.
      */
-    MERMAID(new MermaidFormatter());
+    MERMAID(new MermaidFormatter()),
+
+    /**
+     * 将任意的对象，转换为一个python类的代码的格式化转换组件，其可以将任何类型的数据转换为 python 代码！
+     * <p>
+     * Convert any object into a formatted conversion component of Python class code, which can convert any type of data into Python code!
+     */
+    J_TO_PYTHON(new JToPythonFormatter());
 
     /**
      * 格式化器的对象，在这里存储的就是当前类型的格式化器的实现。

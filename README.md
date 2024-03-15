@@ -4,7 +4,8 @@
 
 ## 介绍
 
-通过此库，您可以实现将一个任意类型的对象进行按照 JSON XML HTML 等格式进行转换，并获取到结果字符串，是非常方便的数据对象格式化工具库，其具有强大的性能和类反射的缓存机制，能够不进行过多的解析和转换！
+通过此库，您可以实现将一个任意类型的对象进行按照 JSON XML HTML
+等格式进行转换，并获取到结果字符串，是非常方便的数据对象格式化工具库，其具有强大的性能和类反射的缓存机制，能够不进行过多的解析和转换！
 
 ### 获取方式
 
@@ -23,7 +24,8 @@
     <dependency>
         <groupId>io.github.BeardedManZhao</groupId>
         <artifactId>zhao-utils</artifactId>
-        <version>1.0.20240121</version>
+        <!-- TODO 1.0.3 版本之后，建议使用 1.0.20240315 版本，否则有时候会出现一些函数找不到的错误！ -->
+        <version>1.0.20240315</version>
     </dependency>
 </dependencies>
 ```
@@ -349,7 +351,8 @@ public class Test {
 
 #### xml 格式化组件演示实例
 
-处理 xml 类型的格式化组件，它能够将任意的对象使用标签的方式转换成为一个 xml 格式的文本，xml 类型是具有根节点的，如果您格式化的是一个Map类型的对象，是支持指定根节点名字的，要指定根节点可以在 `format` 函数中指定
+处理 xml 类型的格式化组件，它能够将任意的对象使用标签的方式转换成为一个 xml 格式的文本，xml
+类型是具有根节点的，如果您格式化的是一个Map类型的对象，是支持指定根节点名字的，要指定根节点可以在 `format` 函数中指定
 name 参数！
 
 ```java
@@ -425,7 +428,8 @@ public class Test {
 
 #### html 格式化组件演示实例
 
-此组件是 HTML 格式化组件，是 xml 格式化组件的子类，它可以在实现 xml/html 格式转换的前提下，还保证其中字段的顺序，这对于html来说是很重要的，如果html 中的标签顺序不一致，则页面会错乱！
+此组件是 HTML 格式化组件，是 xml 格式化组件的子类，它可以在实现 xml/html 格式转换的前提下，还保证其中字段的顺序，这对于html来说是很重要的，如果html
+中的标签顺序不一致，则页面会错乱！
 
 ```java
 import top.lingyuzhao.varFormatter.core.Formatter;
@@ -500,7 +504,8 @@ public class Test {
 
 #### Mermaid 格式化组件演示实例
 
-Mermaid 是一种图结构的格式化组件，它能够将任意的类结构转换为 Mermaid 格式的文本，Mermaid 格式是具有图结构的，您可以将一个对象直接按照 Mermaid
+Mermaid 是一种图结构的格式化组件，它能够将任意的类结构转换为 Mermaid 格式的文本，Mermaid 格式是具有图结构的，您可以将一个对象直接按照
+Mermaid
 类结构进行转换，这经常能够适用于观察类结构的场景，接下来就是有关的代码示例！
 
 ```java
@@ -775,14 +780,106 @@ TestObj.testObj2.arrayList==Collection>String/Number==>TestObj.testObj2.arrayLis
 TestObj.testObj2.arrayList.4--Collection>value-->TestObj.testObj2.arrayList.4v(("4"))
 ```
 
+#### JavaToPython 类代码转换输出
+
+在 1.0.2 版本中，我们添加了 `VarFormatter.J_TO_PYTHON` 格式化组件，其可以将一个 Java 对象转换为 Python 类代码！下面是一个示例！
+
+```java
+import top.lingyuzhao.varFormatter.core.Formatter;
+import top.lingyuzhao.varFormatter.core.VarFormatter;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+/**
+ * 测试类
+ *
+ * @author zhao
+ */
+public class Test {
+
+    public static void main(String[] args) {
+        // 使用单例模式 获取到 json 格式化组件
+        final Formatter formatter0 = VarFormatter.J_TO_PYTHON.getFormatter(true);
+        // 实例化 TestObj 对象
+        TestObj testObj1 = new TestObj();
+        // 转换成 python 类的代码 并打印出来
+        System.out.println(formatter0.format(testObj1));
+    }
+
+    // 准备了一个复杂的类
+    static class TestObj {
+        String name = "zhao\nling\nyu\tzhao";
+        int age = 1024;
+        HashMap<String, Object> data = new HashMap<>();
+        TestObj2 testObj2 = new TestObj2();
+
+        {
+            data.put("k", 123123);
+            data.put("k1", "123\n\n123");
+        }
+
+        public static class TestObj2 {
+            String name = "zhao123";
+            ArrayList<Integer> arrayList = new ArrayList<>();
+
+            {
+                arrayList.add(1);
+                arrayList.add(2);
+                arrayList.add(3);
+                arrayList.add(4);
+            }
+        }
+    }
+}
+```
+
+下面是格式转换之后的结果
+
+```python
+class Map:
+    # 构造函数 / Constructor
+    def __init__(self):
+        self.data = {"k1":"123\n\n123","k":123123}
+        self.name = 'zhao\nling\nyu\tzhao'
+        self.age = 1024
+        self.testObj2 = {"name":"zhao123","arrayList":[1,2,3,4]}
+
+    def get_data(self):
+        return self.data
+
+    def set_data(self, v):
+        self.data = v
+
+    def get_name(self):
+        return self.name
+
+    def set_name(self, v):
+        self.name = v
+
+    def get_age(self):
+        return self.age
+
+    def set_age(self, v):
+        self.age = v
+
+    def get_test_obj2(self):
+        return self.testObj2
+
+    def set_test_obj2(self, v):
+        self.testObj2 = v
+```
+
 ## 更新记录
 
-### 2024-03-xx
+### 2024-03-15
 
-_开发 1.0.2 版本！【此版本还未发布！】_
+_发布 1.0.2 版本！_
 
 - 增加了 yaml 格式化组件！
 - 增加了数据流的格式转换结果输出方法！
+- 针对字符串的数据格式化操作进行转义解析，防止换行符导致错位
+- 增加了 java 类 到 python 类代码的格式化转换工作！
 
 ### 2024-03-09
 

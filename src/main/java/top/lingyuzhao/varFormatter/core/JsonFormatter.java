@@ -1,6 +1,7 @@
 package top.lingyuzhao.varFormatter.core;
 
 import top.lingyuzhao.utils.ASClass;
+import top.lingyuzhao.varFormatter.utils.StrUtils;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,7 +12,7 @@ import java.util.Map;
 /**
  * JSON格式化器，同时也是基础格式化器，此格式化器将会自动的迭代一个对象中的所有子参数，并根据子参数的字段类型进行格式化操作，如果子类没有具体的实现，则这里返回的就是 json 数据类型。
  * <p>
- * The JSON formatter, also known as the basic formatter, automatically iterates over all sub parameters in an object and performs formatting operations based on the field type of the sub parameters. If the sub class does not have a specific implementation, the returned data type is the JSON data class.
+ * The JSON formatter, also known as the basic formatter, automatically iterates over all sub parameters in an object and performs formatting operations based on the field type of the sub parameters. If the subClass does not have a specific implementation, the returned data type is the JSON data class.
  *
  * @author zhao
  */
@@ -111,7 +112,7 @@ public class JsonFormatter extends ManualFormatter {
      * The result of a Map object after being formatted
      */
     public String formatMap(Map<?, ?> data) {
-        try(StringWriter stringWriter = new StringWriter(); PrintWriter printWriter = new PrintWriter(stringWriter)){
+        try (StringWriter stringWriter = new StringWriter(); PrintWriter printWriter = new PrintWriter(stringWriter)) {
             this.formatToStream(data, printWriter);
             return stringWriter.toString();
         } catch (IOException e) {
@@ -135,7 +136,7 @@ public class JsonFormatter extends ManualFormatter {
      * The result of a Map object after being formatted
      */
     public String formatList(Collection<?> data, String name) {
-        try(StringWriter stringWriter = new StringWriter(); PrintWriter printWriter = new PrintWriter(stringWriter)){
+        try (StringWriter stringWriter = new StringWriter(); PrintWriter printWriter = new PrintWriter(stringWriter)) {
             this.formatToStream(data, name, printWriter);
             return stringWriter.toString();
         } catch (IOException e) {
@@ -273,7 +274,7 @@ public class JsonFormatter extends ManualFormatter {
             return this.formatList(ASClass.transform(value), null);
         }
         if (value instanceof String) {
-            return "\"" + value + "\"";
+            return "\"" + StrUtils.escapeNewline(value.toString()) + "\"";
         }
         return this.format(value);
     }
