@@ -34,20 +34,40 @@ public class MermaidFormatter extends ManualFormatter {
      */
     @Override
     public void formatToStream(Map<?, ?> data, String name, PrintWriter printWriter) {
-        if (data instanceof DataObj) {
-            printWriter.println(((DataObj) data).getPrefix());
-        } else {
-            printWriter.println();
+        this.formatToStream(data, name, printWriter, null);
+    }
+
+    /**
+     * 格式化一个 List 对象，会自动的将其中的 key 和 value 按照一定的格式进行解析和计算，获取到最终结果。
+     * <p>
+     * Formatting a Map object will automatically parse and calculate the key and value in a certain format to obtain the final result.!
+     *
+     * @param data        要格式化的 List 对象
+     *                    <p>
+     *                    object to format
+     * @param name        在格式化操作中 需要做为 key 的名称
+     * @param printWriter 转换结果的数据输出流，转换的结果会存储进这个数据流中！
+     *                    <p>
+     *                    The data output stream of the conversion result will be stored in this data stream!
+     * @param nameJoin    如果需要进行名称的拼接操作可以在这里设置为 true or null ，拼接名字有助于避免名称重复的问题，在图构建中能完全的避免分支交叉，但是如果您需要进行分支交叉，则不建议设置为 true。
+     */
+    public void formatToStream(Map<?, ?> data, String name, PrintWriter printWriter, Boolean nameJoin) {
+        final boolean b = data instanceof DataObj;
+        if (nameJoin == null && b) {
+            nameJoin = ((DataObj) data).isNameJoin();
         }
-        final String s = name + '.';
+        if (b) {
+            printWriter.println(((DataObj) data).getPrefix());
+        }
+        final boolean finalNameJoin = Boolean.TRUE.equals(nameJoin);
         data.forEach((k, v) -> {
             if (v == null) {
                 return;
             }
-            final String s1 = s + k;
+            final String s1 = finalNameJoin ? name + '.' + k : k.toString();
             if (v instanceof Map) {
                 printWriter.append(String.format("%s==Map>Map==>%s\n", name, s1));
-                this.formatToStream((Map<?, ?>) v, s1, printWriter);
+                this.formatToStream((Map<?, ?>) v, s1, printWriter, finalNameJoin);
             } else if (v instanceof Collection) {
                 printWriter.append(String.format("%s==Map>Collection==>%s\n", name, s1));
                 this.formatToStream((Collection<?>) v, s1, printWriter);

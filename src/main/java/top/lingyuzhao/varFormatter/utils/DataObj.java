@@ -31,6 +31,11 @@ public class DataObj extends LinkedHashMap<String, Object> implements Serializab
     private String prefix;
 
     /**
+     * 此对象中是否需要进行名称拼接的构造？如果不需要名称拼接可能会出现些分支会和的问题
+     */
+    private boolean nameJoin = true;
+
+    /**
      * 当前数据对象的构造函数
      * <p>
      * The constructor of the current data object
@@ -68,7 +73,7 @@ public class DataObj extends LinkedHashMap<String, Object> implements Serializab
      * @return 前缀
      */
     public String getPrefix() {
-        return prefix;
+        return prefix != null ? prefix : "";
     }
 
     /**
@@ -78,6 +83,14 @@ public class DataObj extends LinkedHashMap<String, Object> implements Serializab
      */
     public void setPrefix(String prefix) {
         this.prefix = prefix;
+    }
+
+    public boolean isNameJoin() {
+        return nameJoin;
+    }
+
+    public void setNameJoin(boolean nameJoin) {
+        this.nameJoin = nameJoin;
     }
 
     /**

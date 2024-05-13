@@ -18,7 +18,7 @@
     <dependency>
         <groupId>io.github.BeardedManZhao</groupId>
         <artifactId>varFormatter</artifactId>
-        <version>1.0.3</version>
+        <version>1.0.4</version>
     </dependency>
     <!-- 引入库所需要的工具类 -->
     <dependency>
@@ -874,9 +874,11 @@ class Map:
 
 ### 2024-05-13
 
-_发布 1.0.3 版本_
+_发布 1.0.4 版本_
 
 - 对于 `MermaidFormatter` 格式化组件，增加了前缀支持，您可以在您的 DataObj 中设置格式化的 `profix` 参数，实现手动指定前缀！
+- 能够显示的设置 `profix` 参数，实现手动指定前缀！
+- 能够通过手动调用 `dataObj.setNameJoin(false)` 关闭 mermaid 格式化时的名称自动拼接。
 
 ### 2024-03-15
 
