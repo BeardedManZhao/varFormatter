@@ -132,9 +132,9 @@ public class YamlFormatter extends ManualFormatter {
      *                    <p>
      *                    object to format
      * @param name        在格式化操作中 需要做为 key 的名称
-     * @param rowTab        制表符前缀
-     *                      <p>
-     *                      Tab prefix
+     * @param rowTab      制表符前缀
+     *                    <p>
+     *                    Tab prefix
      * @param printWriter 转换结果的数据输出流，转换的结果会存储进这个数据流中！
      *                    <p>
      *                    The data output stream of the conversion result will be stored in this data stream!

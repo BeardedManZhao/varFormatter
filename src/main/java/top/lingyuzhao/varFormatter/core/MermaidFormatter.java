@@ -1,5 +1,7 @@
 package top.lingyuzhao.varFormatter.core;
 
+import top.lingyuzhao.varFormatter.utils.DataObj;
+
 import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.Map;
@@ -32,6 +34,11 @@ public class MermaidFormatter extends ManualFormatter {
      */
     @Override
     public void formatToStream(Map<?, ?> data, String name, PrintWriter printWriter) {
+        if (data instanceof DataObj) {
+            printWriter.println(((DataObj) data).getPrefix());
+        } else {
+            printWriter.println();
+        }
         final String s = name + '.';
         data.forEach((k, v) -> {
             if (v == null) {

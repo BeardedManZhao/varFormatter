@@ -18,7 +18,7 @@
     <dependency>
         <groupId>io.github.BeardedManZhao</groupId>
         <artifactId>varFormatter</artifactId>
-        <version>1.0.1</version>
+        <version>1.0.3</version>
     </dependency>
     <!-- 引入库所需要的工具类 -->
     <dependency>
@@ -564,37 +564,37 @@ public class Test {
 
 ```mermaid
 graph LR
-TestObj==Map>Map==>TestObj.data
-TestObj.data==Map>String/Number==>TestObj.data.k1
-TestObj.data.k1--Map>value-->TestObj.data.k1v{"123123"}
-TestObj.data==Map>String/Number==>TestObj.data.k
-TestObj.data.k--Map>value-->TestObj.data.kv{"123123"}
-TestObj==Map>String/Number==>TestObj.name
-TestObj.name--Map>value-->TestObj.namev{"zhao"}
-TestObj==Map>String/Number==>TestObj.age
-TestObj.age--Map>value-->TestObj.agev{"1024"}
-TestObj==Map>Object==>TestObj.testObj2
-TestObj.testObj2==Map>String/Number==>TestObj.testObj2.name
-TestObj.testObj2.name--Map>value-->TestObj.testObj2.namev{"zhao123"}
-TestObj.testObj2==Map>Collection==>TestObj.testObj2.arrayList
-TestObj.testObj2.arrayList==Collection>String/Number==>TestObj.testObj2.arrayList.1
-TestObj.testObj2.arrayList.1--Collection>value-->TestObj.testObj2.arrayList.1v(("1"))
-TestObj.testObj2.arrayList==Collection>String/Number==>TestObj.testObj2.arrayList.2
-TestObj.testObj2.arrayList.2--Collection>value-->TestObj.testObj2.arrayList.2v(("2"))
-TestObj.testObj2.arrayList==Collection>String/Number==>TestObj.testObj2.arrayList.3
-TestObj.testObj2.arrayList.3--Collection>value-->TestObj.testObj2.arrayList.3v(("3"))
-TestObj.testObj2.arrayList==Collection>String/Number==>TestObj.testObj2.arrayList.4
-TestObj.testObj2.arrayList.4--Collection>value-->TestObj.testObj2.arrayList.4v(("4"))
-TestObj.testObj2.arrayList==Collection>Object==>TestObj.testObj2.arrayList.5
-TestObj.testObj2.arrayList.5==Map>String/Number==>TestObj.testObj2.arrayList.5.serialVersionUID
-TestObj.testObj2.arrayList.5.serialVersionUID--Map>value-->TestObj.testObj2.arrayList.5.serialVersionUIDv{"7523967970034938905"}
-TestObj.testObj2.arrayList.5==Map>Object==>TestObj.testObj2.arrayList.5.ttb
-TestObj.testObj2.arrayList.5==Map>Object==>TestObj.testObj2.arrayList.5.wtb
-TestObj.testObj2.arrayList.5==Map>String/Number==>TestObj.testObj2.arrayList.5.fastTime
-TestObj.testObj2.arrayList.5.fastTime--Map>value-->TestObj.testObj2.arrayList.5.fastTimev{"1709990413635"}
-TestObj.testObj2.arrayList.5==Map>Object==>TestObj.testObj2.arrayList.5.gcal
-TestObj.testObj2.arrayList.5==Map>String/Number==>TestObj.testObj2.arrayList.5.defaultCenturyStart
-TestObj.testObj2.arrayList.5.defaultCenturyStart--Map>value-->TestObj.testObj2.arrayList.5.defaultCenturyStartv{"0"}
+    TestObj == Map>Map ==> TestObj.data
+    TestObj.data == Map>String/Number ==> TestObj.data.k1
+    TestObj.data.k1 -- Map>value --> TestObj.data.k1v{"123123"}
+    TestObj.data == Map>String/Number ==> TestObj.data.k
+    TestObj.data.k -- Map>value --> TestObj.data.kv{"123123"}
+    TestObj == Map>String/Number ==> TestObj.name
+    TestObj.name -- Map>value --> TestObj.namev{"zhao"}
+    TestObj == Map>String/Number ==> TestObj.age
+    TestObj.age -- Map>value --> TestObj.agev{"1024"}
+    TestObj == Map>Object ==> TestObj.testObj2
+    TestObj.testObj2 == Map>String/Number ==> TestObj.testObj2.name
+    TestObj.testObj2.name -- Map>value --> TestObj.testObj2.namev{"zhao123"}
+    TestObj.testObj2 == Map>Collection ==> TestObj.testObj2.arrayList
+    TestObj.testObj2.arrayList == Collection>String/Number ==> TestObj.testObj2.arrayList.1
+    TestObj.testObj2.arrayList.1 -- Collection>value --> TestObj.testObj2.arrayList.1v(("1"))
+    TestObj.testObj2.arrayList == Collection>String/Number ==> TestObj.testObj2.arrayList.2
+    TestObj.testObj2.arrayList.2 -- Collection>value --> TestObj.testObj2.arrayList.2v(("2"))
+    TestObj.testObj2.arrayList == Collection>String/Number ==> TestObj.testObj2.arrayList.3
+    TestObj.testObj2.arrayList.3 -- Collection>value --> TestObj.testObj2.arrayList.3v(("3"))
+    TestObj.testObj2.arrayList == Collection>String/Number ==> TestObj.testObj2.arrayList.4
+    TestObj.testObj2.arrayList.4 -- Collection>value --> TestObj.testObj2.arrayList.4v(("4"))
+    TestObj.testObj2.arrayList == Collection>Object ==> TestObj.testObj2.arrayList.5
+    TestObj.testObj2.arrayList.5 == Map>String/Number ==> TestObj.testObj2.arrayList.5.serialVersionUID
+    TestObj.testObj2.arrayList.5.serialVersionUID -- Map>value --> TestObj.testObj2.arrayList.5.serialVersionUIDv{"7523967970034938905"}
+    TestObj.testObj2.arrayList.5 == Map>Object ==> TestObj.testObj2.arrayList.5.ttb
+    TestObj.testObj2.arrayList.5 == Map>Object ==> TestObj.testObj2.arrayList.5.wtb
+    TestObj.testObj2.arrayList.5 == Map>String/Number ==> TestObj.testObj2.arrayList.5.fastTime
+    TestObj.testObj2.arrayList.5.fastTime -- Map>value --> TestObj.testObj2.arrayList.5.fastTimev{"1709990413635"}
+    TestObj.testObj2.arrayList.5 == Map>Object ==> TestObj.testObj2.arrayList.5.gcal
+    TestObj.testObj2.arrayList.5 == Map>String/Number ==> TestObj.testObj2.arrayList.5.defaultCenturyStart
+    TestObj.testObj2.arrayList.5.defaultCenturyStart -- Map>value --> TestObj.testObj2.arrayList.5.defaultCenturyStartv{"0"}
 ```
 
 ### 数据输出方法的示例
@@ -659,28 +659,28 @@ public class Test {
 
 ```mermaid
 graph LR
-map==Map>Map==>map.data
-map.data==Map>String/Number==>map.data.k1
-map.data.k1--Map>value-->map.data.k1v{"123123"}
-map.data==Map>Map==>map.data.k2
-map.data==Map>String/Number==>map.data.k
-map.data.k--Map>value-->map.data.kv{"123123"}
-map==Map>String/Number==>map.name
-map.name--Map>value-->map.namev{"zhao"}
-map==Map>String/Number==>map.age
-map.age--Map>value-->map.agev{"1024"}
-map==Map>Object==>map.testObj2
-map.testObj2==Map>String/Number==>map.testObj2.name
-map.testObj2.name--Map>value-->map.testObj2.namev{"zhao123"}
-map.testObj2==Map>Collection==>map.testObj2.arrayList
-map.testObj2.arrayList==Collection>String/Number==>map.testObj2.arrayList.1
-map.testObj2.arrayList.1--Collection>value-->map.testObj2.arrayList.1v(("1"))
-map.testObj2.arrayList==Collection>String/Number==>map.testObj2.arrayList.2
-map.testObj2.arrayList.2--Collection>value-->map.testObj2.arrayList.2v(("2"))
-map.testObj2.arrayList==Collection>String/Number==>map.testObj2.arrayList.3
-map.testObj2.arrayList.3--Collection>value-->map.testObj2.arrayList.3v(("3"))
-map.testObj2.arrayList==Collection>String/Number==>map.testObj2.arrayList.4
-map.testObj2.arrayList.4--Collection>value-->map.testObj2.arrayList.4v(("4"))
+    map == Map>Map ==> map.data
+    map.data == Map>String/Number ==> map.data.k1
+    map.data.k1 -- Map>value --> map.data.k1v{"123123"}
+    map.data == Map>Map ==> map.data.k2
+    map.data == Map>String/Number ==> map.data.k
+    map.data.k -- Map>value --> map.data.kv{"123123"}
+    map == Map>String/Number ==> map.name
+    map.name -- Map>value --> map.namev{"zhao"}
+    map == Map>String/Number ==> map.age
+    map.age -- Map>value --> map.agev{"1024"}
+    map == Map>Object ==> map.testObj2
+    map.testObj2 == Map>String/Number ==> map.testObj2.name
+    map.testObj2.name -- Map>value --> map.testObj2.namev{"zhao123"}
+    map.testObj2 == Map>Collection ==> map.testObj2.arrayList
+    map.testObj2.arrayList == Collection>String/Number ==> map.testObj2.arrayList.1
+    map.testObj2.arrayList.1 -- Collection>value --> map.testObj2.arrayList.1v(("1"))
+    map.testObj2.arrayList == Collection>String/Number ==> map.testObj2.arrayList.2
+    map.testObj2.arrayList.2 -- Collection>value --> map.testObj2.arrayList.2v(("2"))
+    map.testObj2.arrayList == Collection>String/Number ==> map.testObj2.arrayList.3
+    map.testObj2.arrayList.3 -- Collection>value --> map.testObj2.arrayList.3v(("3"))
+    map.testObj2.arrayList == Collection>String/Number ==> map.testObj2.arrayList.4
+    map.testObj2.arrayList.4 -- Collection>value --> map.testObj2.arrayList.4v(("4"))
 ```
 
 #### 数据流输出
@@ -756,28 +756,28 @@ public class Test {
 
 ```mermaid
 graph LR
-TestObj==Map>Map==>TestObj.data
-TestObj.data==Map>String/Number==>TestObj.data.k1
-TestObj.data.k1--Map>value-->TestObj.data.k1v{"123123"}
-TestObj.data==Map>Map==>TestObj.data.k2
-TestObj.data==Map>String/Number==>TestObj.data.k
-TestObj.data.k--Map>value-->TestObj.data.kv{"123123"}
-TestObj==Map>String/Number==>TestObj.name
-TestObj.name--Map>value-->TestObj.namev{"zhao"}
-TestObj==Map>String/Number==>TestObj.age
-TestObj.age--Map>value-->TestObj.agev{"1024"}
-TestObj==Map>Object==>TestObj.testObj2
-TestObj.testObj2==Map>String/Number==>TestObj.testObj2.name
-TestObj.testObj2.name--Map>value-->TestObj.testObj2.namev{"zhao123"}
-TestObj.testObj2==Map>Collection==>TestObj.testObj2.arrayList
-TestObj.testObj2.arrayList==Collection>String/Number==>TestObj.testObj2.arrayList.1
-TestObj.testObj2.arrayList.1--Collection>value-->TestObj.testObj2.arrayList.1v(("1"))
-TestObj.testObj2.arrayList==Collection>String/Number==>TestObj.testObj2.arrayList.2
-TestObj.testObj2.arrayList.2--Collection>value-->TestObj.testObj2.arrayList.2v(("2"))
-TestObj.testObj2.arrayList==Collection>String/Number==>TestObj.testObj2.arrayList.3
-TestObj.testObj2.arrayList.3--Collection>value-->TestObj.testObj2.arrayList.3v(("3"))
-TestObj.testObj2.arrayList==Collection>String/Number==>TestObj.testObj2.arrayList.4
-TestObj.testObj2.arrayList.4--Collection>value-->TestObj.testObj2.arrayList.4v(("4"))
+    TestObj == Map>Map ==> TestObj.data
+    TestObj.data == Map>String/Number ==> TestObj.data.k1
+    TestObj.data.k1 -- Map>value --> TestObj.data.k1v{"123123"}
+    TestObj.data == Map>Map ==> TestObj.data.k2
+    TestObj.data == Map>String/Number ==> TestObj.data.k
+    TestObj.data.k -- Map>value --> TestObj.data.kv{"123123"}
+    TestObj == Map>String/Number ==> TestObj.name
+    TestObj.name -- Map>value --> TestObj.namev{"zhao"}
+    TestObj == Map>String/Number ==> TestObj.age
+    TestObj.age -- Map>value --> TestObj.agev{"1024"}
+    TestObj == Map>Object ==> TestObj.testObj2
+    TestObj.testObj2 == Map>String/Number ==> TestObj.testObj2.name
+    TestObj.testObj2.name -- Map>value --> TestObj.testObj2.namev{"zhao123"}
+    TestObj.testObj2 == Map>Collection ==> TestObj.testObj2.arrayList
+    TestObj.testObj2.arrayList == Collection>String/Number ==> TestObj.testObj2.arrayList.1
+    TestObj.testObj2.arrayList.1 -- Collection>value --> TestObj.testObj2.arrayList.1v(("1"))
+    TestObj.testObj2.arrayList == Collection>String/Number ==> TestObj.testObj2.arrayList.2
+    TestObj.testObj2.arrayList.2 -- Collection>value --> TestObj.testObj2.arrayList.2v(("2"))
+    TestObj.testObj2.arrayList == Collection>String/Number ==> TestObj.testObj2.arrayList.3
+    TestObj.testObj2.arrayList.3 -- Collection>value --> TestObj.testObj2.arrayList.3v(("3"))
+    TestObj.testObj2.arrayList == Collection>String/Number ==> TestObj.testObj2.arrayList.4
+    TestObj.testObj2.arrayList.4 -- Collection>value --> TestObj.testObj2.arrayList.4v(("4"))
 ```
 
 #### JavaToPython 类代码转换输出
@@ -871,6 +871,12 @@ class Map:
 ```
 
 ## 更新记录
+
+### 2024-05-13
+
+_发布 1.0.3 版本_
+
+- 对于 `MermaidFormatter` 格式化组件，增加了前缀支持，您可以在您的 DataObj 中设置格式化的 `profix` 参数，实现手动指定前缀！
 
 ### 2024-03-15
 

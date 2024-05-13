@@ -26,6 +26,11 @@ public class DataObj extends LinkedHashMap<String, Object> implements Serializab
     private final String name;
 
     /**
+     * 此对象开始进行格式化操作之前要打印的数据，会自动追加换行符
+     */
+    private String prefix;
+
+    /**
      * 当前数据对象的构造函数
      * <p>
      * The constructor of the current data object
@@ -55,6 +60,24 @@ public class DataObj extends LinkedHashMap<String, Object> implements Serializab
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     * 获取当前数据对象的前缀
+     *
+     * @return 前缀
+     */
+    public String getPrefix() {
+        return prefix;
+    }
+
+    /**
+     * 设置当前数据对象的前缀，在某些操作中可能会支持使用此语句
+     *
+     * @param prefix 前缀
+     */
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
     }
 
     /**
